@@ -14,7 +14,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // base.onAuth(this.authStateChanged.bind(this))
     base.syncState(`messages`, {
     context: this,
     state: 'messages',
@@ -32,7 +31,7 @@ class App extends Component {
      base.createUser({
         email: this.email.value,
         password: this.password.value
-      }, this.userStateChanged.bind(this))
+      }, this.authStateChanged.bind(this))
       console.log(this.email.value)
     }
       this.email.value = ''
@@ -50,14 +49,6 @@ class App extends Component {
 
     signOut(){
       base.unauth()
-    }
-
-    userStateChanged (error, user) {
-      if (error) {
-        console.log(error)
-      } else if (user) {
-        console.log(user.uid)
-      }
     }
 
     authStateChanged (error, user) {
@@ -96,6 +87,7 @@ class App extends Component {
           <input ref={element => this.email = element} placeholder="Email Address"/>
           <input ref={element => this.password = element} placeholder="Password"/>
           <button onClick={this.signIn.bind(this)} hidden={this.state.userName} className="log-in">Login</button>
+
           <h2>No Account?Please Sign Up</h2>
           <button onClick={this.signUp.bind(this)} hidden={this.state.userName} className="signUp">Sign Up!!</button>
           <button onClick={this.signOut.bind(this)} hidden={!this.state.userName} className="log-in">Sign Out</button>
